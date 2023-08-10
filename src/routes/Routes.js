@@ -7,9 +7,21 @@ import { createTtransOperation, deleteTtransOperation, getTtransOperation, updat
 import { createTtransOutput, deleteTtransOutput, getTtransOutput, updateTtransOutput } from "../controllers/transaction/TransactionOutputController.js"
 import { createTtransStop, deleteTtransStop, getTtransStop, updateTtransStop } from "../controllers/transaction/TransactionStopController.js"
 import { createTworkDisplay, deleteTworkDisplay, getTworkDisplay, updateTworkDisplay } from "../controllers/public/TworkDisplayController.js"
+import { createTmastSloc, deleteTmastSloc, getTmastSloc, updateTmastSloc } from "../controllers/master/MasterSlocController.js"
+import { createTmastKanban, deleteTmastKanban, getTmastKanban, updateTmastKanban } from "../controllers/master/MasterKanbanCOntroller.js"
+import { createTmastWarehouse, getTmastWarehouse, updateTmastWarehouse } from "../controllers/master/TmastWarehouseController.js"
+//import {} from "../controllers/master/"
 const Routes = new express.Router()
 
 /* --------------- Start Master --------------- */
+
+
+/* Start Tmast Warehouse */
+Routes.get('/warehouse', getTmastWarehouse)
+Routes.post('/warehouse', createTmastWarehouse)
+Routes.patch('/warehouse', updateTmastWarehouse)
+Routes.delete('/warehouse', deleteTmastDefect)
+/* End Tmast Warehouse */
 
 /* Start Tmast Machine */
 Routes.get('/machine', getTmastMachine)
@@ -31,6 +43,20 @@ Routes.post('/product', createTmastProduct)
 Routes.patch('/product', updateTmastProduct)
 Routes.delete('/product', deleteTmastProduct)
 /* End Tmast Product */
+
+/* Start Tmast Sloc */
+Routes.get('/sloc', getTmastSloc)
+Routes.post('/sloc', createTmastSloc)
+Routes.patch('/sloc', updateTmastSloc)
+Routes.delete('/sloc', deleteTmastSloc)
+/* End Tmast Sloc */
+
+/* Start Tmast Kanban */
+Routes.get('/kanban', getTmastKanban)
+Routes.post('/kanban', createTmastKanban)
+Routes.patch('/kanban', updateTmastKanban)
+Routes.delete('/kanban', deleteTmastKanban)
+/* End Tmast Kanban */
 
 /* --------------- End Master --------------- */
 
@@ -64,6 +90,7 @@ Routes.post('/trans_stop', createTtransStop)
 Routes.patch('/trans_stop', updateTtransStop)
 Routes.delete('/trans_stop', deleteTtransStop)
 /* End Transaction Stop */
+
 
 /* --------------- End Transaction --------------- */
 

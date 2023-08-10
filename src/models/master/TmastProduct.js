@@ -2,10 +2,6 @@ import { DataTypes } from "sequelize";
 import Database from "../../../config/database/Database.js";
 
 const TmastProduct = Database.define("tmast_product", {
-  slock : {
-    type : DataTypes.STRING,
-    allowNull : true
-  },
   part_no : {
     type : DataTypes.STRING,
     allowNull : true
@@ -16,14 +12,6 @@ const TmastProduct = Database.define("tmast_product", {
   },
   qty : {
     type : DataTypes.INTEGER,
-    allowNull : true
-  },
-  from : {
-    type : DataTypes.STRING,
-    allowNull : true
-  },
-  to : {
-    type : DataTypes.STRING,
     allowNull : true
   },
 },{
