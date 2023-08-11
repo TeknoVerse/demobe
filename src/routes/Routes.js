@@ -9,7 +9,7 @@ import { createTtransStop, deleteTtransStop, getTtransStop, updateTtransStop } f
 import { createTworkDisplay, deleteTworkDisplay, getTworkDisplay, updateTworkDisplay } from "../controllers/public/TworkDisplayController.js"
 import { createTmastSloc, deleteTmastSloc, getTmastSloc, updateTmastSloc } from "../controllers/master/MasterSlocController.js"
 import { createTmastKanban, deleteTmastKanban, getTmastKanban, updateTmastKanban } from "../controllers/master/MasterKanbanCOntroller.js"
-import { createTmastWarehouse, getTmastWarehouse, updateTmastWarehouse } from "../controllers/master/TmastWarehouseController.js"
+import { createTmastWarehouse, deleteTmastWarehouse, getTmastWarehouse, updateTmastWarehouse } from "../controllers/master/TmastWarehouseController.js"
 //import {} from "../controllers/master/"
 const Routes = new express.Router()
 
@@ -20,7 +20,7 @@ const Routes = new express.Router()
 Routes.get('/warehouse', getTmastWarehouse)
 Routes.post('/warehouse', createTmastWarehouse)
 Routes.patch('/warehouse', updateTmastWarehouse)
-Routes.delete('/warehouse', deleteTmastDefect)
+Routes.delete('/warehouse', deleteTmastWarehouse)
 /* End Tmast Warehouse */
 
 /* Start Tmast Machine */

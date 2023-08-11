@@ -11,8 +11,18 @@ export const getTmastProduct = async (req,res) => {
 
 export const createTmastProduct = async (req,res) => {
     try {
-        await TmastProduct.create(req.body)
-        res.sendStatus(201)
+        const {part_no} = req.body
+        const cekExitstProduct = await TmastProduct.findOne({
+            where : {
+                part_no : part_no
+            }
+        })
+        if(!cekExitstProduct){
+            await TmastProduct.create(req.body)
+            res.sendStatus(201)
+        }else{
+            res.json({msg : "Data Already Exist"})
+        }
     } catch (error) {
         console.log(error)
     }

@@ -11,8 +11,22 @@ export const getTmastWarehouse = async (req,res) => {
 
 export const createTmastWarehouse = async (req,res) => {
     try {
-        await TmastWarehouse.create(req.body)
-        res.sendStatus(201)
+        const {sloc_code, part_code} = req.body
+
+        const cekExistProduct = await TmastWarehouse.findOne({
+            where : {
+                sloc_code : sloc_code,
+                part_code : part_code
+            }
+        })
+        if(!cekExistProduct){
+            await TmastWarehouse.create(req.body)
+            res.sendStatus(201)
+        }else{
+            res.json({msg : "Data Already Exist"})
+        }
+
+   
     } catch (error) {
         console.log(error)
     }
