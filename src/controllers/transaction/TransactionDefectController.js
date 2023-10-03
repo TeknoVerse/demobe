@@ -1,4 +1,4 @@
-import TtransDefect from "../../models/transaction/TtransDefect.js"
+import TtransDefect from "../../model/modelData/transaction/TtransDefect.js"
 
 export const getTtransDefect = async (req,res) => {
     try {

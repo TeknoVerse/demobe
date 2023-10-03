@@ -1,4 +1,4 @@
-import TmastDefect from "../../models/master/TmastDefect.js";
+import TmastDefect from "../../model/modelData/master/TmastDefect.js"
 
 export const getTmastDefect = async (req,res) => {
     try {

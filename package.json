@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate" : "node --experimental-modules ./src/migrations/Migrate.js",
+    "migrate-destroy" : "node --experimental-modules ./src/migrations/Destroy.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +19,7 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "esm": "^3.2.25",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.1",
     "mysql2": "^3.5.2",

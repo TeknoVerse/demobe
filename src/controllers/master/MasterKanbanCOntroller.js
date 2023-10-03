@@ -1,4 +1,4 @@
-import TmastKanban from "../../models/master/TmastKanban.js"
+import TmastKanban from "../../model/modelData/master/TmastKanban.js"
 export const getTmastKanban = async (req,res) => {
     try {
         const response = await TmastKanban.findAll()

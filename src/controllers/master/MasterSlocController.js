@@ -1,5 +1,4 @@
-import { where } from "sequelize"
-import TmastSloc from "../../models/master/TmastSloc.js"
+import TmastSloc from "../../model/modelData/master/TmastSloc.js"
 export const getTmastSloc = async (req,res) => {
     try {
         const response = await TmastSloc.findAll()

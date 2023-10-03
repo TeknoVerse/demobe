@@ -1,5 +1,5 @@
-import { Sequelize, where } from "sequelize";
-import TtransStop from "../../models/transaction/TtransStop.js";
+import { Sequelize } from "sequelize";
+import TtransStop from "../../model/modelData/transaction/TtransStop.js";
 
 export const getTtransStop = async (req, res) => {
   try {

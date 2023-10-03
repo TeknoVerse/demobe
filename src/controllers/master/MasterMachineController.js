@@ -1,4 +1,4 @@
-import TmastMachine from "../../models/master/TmastMachine.js";
+import TmastMachine from "../../model/modelData/master/TmastMachine.js"
 
 export const getTmastMachine = async (req,res) => {
     try {

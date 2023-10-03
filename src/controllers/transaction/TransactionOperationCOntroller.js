@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize"
-import TtransOperation from "../../models/transaction/TtransOperation.js"
+import TtransOperation from "../../model/modelData/transaction/TtransOperation.js";
 
 export const getTtransOperation = async (req,res) => {
     try {

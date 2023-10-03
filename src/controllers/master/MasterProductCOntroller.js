@@ -1,4 +1,4 @@
-import TmastProduct from "../../models/master/TmastProduct.js"
+import TmastProduct from "../../model/modelData/master/TmastProduct.js"
 
 export const getTmastProduct = async (req,res) => {
     try {

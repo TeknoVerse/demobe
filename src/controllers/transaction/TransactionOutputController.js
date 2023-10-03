@@ -1,4 +1,4 @@
-import TtransOutput from "../../models/transaction/TtransOutput.js"
+import TtransOutput from "../../model/modelData/transaction/TtransOutput.js"
 
 export const getTtransOutput = async (req,res) => {
     try {

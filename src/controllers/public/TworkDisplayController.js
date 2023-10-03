@@ -1,4 +1,4 @@
-import TworkDisplay from "../../models/public/TworkDisplay.js"
+import TworkDisplay from "../../model/modelData/public/TworkDisplay.js"
 
 export const getTworkDisplay = async (req,res) => {
     try {

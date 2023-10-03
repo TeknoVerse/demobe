@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import Database from "../../../config/database/Database.js";
 
-const TmastProduct = Database.define("tmast_product", {
+export const TmastProduct = Database.define("tmast_product", {
   part_no : {
     type : DataTypes.STRING,
     allowNull : true
@@ -18,8 +18,10 @@ const TmastProduct = Database.define("tmast_product", {
     tableName : "tmast_product"
 })
 
-export default TmastProduct;
+export default TmastProduct
 
 /* (async () => {
     await TmastProduct.sync()
 })() */
+
+

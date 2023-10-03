@@ -1,4 +1,4 @@
-import TmastWarehouse from "../../models/master/TmastWarehouse.js";
+import TmastWarehouse from "../../model/modelData/master/TmastWarehouse.js"
 
 export const getTmastWarehouse = async (req,res) => {
     try {
