@@ -16,31 +16,37 @@ export const addPlanningTworkDisplay = async () => {
         !addTaks.some(
           (taksItem) =>
             taksItem.machine_no === item.machine_no &&
-            taksItem.my_ct == item.my_ct
+            taksItem.my_ct == item.my_ct &&
+            taksItem.part_code == item.part_code 
         )
       ) {
         addTaks.push(item);
         const { my_ct, machine_no } = item;
-
-        schedule.scheduleJob(`*/${my_ct} * * * * *`, async () => {
-          const cekMachine = getttransOperation.find(
-            (itemMachine) => itemMachine.machine_no === machine_no
-          );
-          if (cekMachine) {
-            if (cekMachine.finish === null) {
-              TworkDisplay.update(
-                {
-                  ctime: Sequelize.literal("ctime + 1"),
-                },
-                {
-                  where: {
-                    machine_no: machine_no,
+       
+          schedule.scheduleJob(`*/${my_ct/1000} * * * * *`, async () => {
+            const cekMachine = getttransOperation.find(
+              (itemMachine) => itemMachine.machine_no === machine_no
+            );
+            if (cekMachine) {
+              if (cekMachine.finish === null) {
+                TworkDisplay.update(
+                  {
+                    ctime: Sequelize.literal("ctime + 1"),
                   },
-                }
-              );
+                  {
+                    where: {
+                      machine_no: machine_no,
+                    },
+                  }
+                );
+              }
             }
-          }
-        });
+          });
+     
+
+      
+
+    
       }
     };
 
@@ -53,17 +59,20 @@ export const addPlanningTworkDisplay = async () => {
       } else {
         getMachine.map(async (datamachine) => {
           const foundInTworkDisplay = getTworkDisplay.find(
-            (dataTwork) => dataTwork.machine_no === datamachine.code
+            (dataTwork) => 
+            dataTwork.machine_no === datamachine.code &&
+            dataTwork.part_code === datamachine.part_no 
           );
           if (!foundInTworkDisplay) {
             await TworkDisplay.create({
               machine_no: datamachine.code,
               machine_name: datamachine.name,
+              part_code: datamachine.part_no,
               ctime: 0,
             });
           }
         });
-
+/*  */
         const dataWithMyCt = getTworkDisplay.map((itemDisplay) => {
           const matchMachine = getMachine.find(
             (itemMachine) => itemMachine.code === itemDisplay.machine_no
@@ -77,9 +86,11 @@ export const addPlanningTworkDisplay = async () => {
 
         Promise.allSettled(promises).then(() => {
           promises.length = 0;
-        });
+        });      
+       
+        
       }
-    }, 2000);
+    }, 1000);
   } catch (error) {
     console.log(error);
   }

@@ -20,18 +20,20 @@ const runRollback = async () => {
     try {
         await Database.authenticate()
         console.log('Conection Success')
+        await TworkDisplay.down(Database.getQueryInterface())
+
     /*     await TmastProduct.down(Database.getQueryInterface())
+        await TtransOutput.down(Database.getQueryInterface())
+
         await TmastDefect.down(Database.getQueryInterface())
         await TmastKanban.down(Database.getQueryInterface())
         await TmastMachine.down(Database.getQueryInterface())
         await TmastSloc.down(Database.getQueryInterface())
         await TmastWarehouse.down(Database.getQueryInterface())
-        await TworkDisplay.down(Database.getQueryInterface())
         await TtransDefect.down(Database.getQueryInterface())
         await TtransOperation.down(Database.getQueryInterface())
-        await TtransOutput.down(Database.getQueryInterface())
         await TtransStop.down(Database.getQueryInterface()) */
-        await TworkOee.down(Database.getQueryInterface())
+     //   await TworkOee.down(Database.getQueryInterface())
         //await TmastShift.down(Database.getQueryInterface())
         console.log('Migration Destroy Success fully')
 q

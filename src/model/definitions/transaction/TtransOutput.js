@@ -40,6 +40,10 @@ export const ttransOutputDefinition = {
         type : DataTypes.STRING,
         allowNull : true
     },
+    ct  : {
+        type : DataTypes.INTEGER,
+        allowNull : true
+    },
     terminal_left  : {
         type : DataTypes.STRING,
         allowNull : true

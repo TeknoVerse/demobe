@@ -1,14 +1,15 @@
 import TtransOutput from "../../model/modelData/transaction/TtransOutput.js"
-
+import {handleLocalTime} from "../MyFunction.js"
 export const getTtransOutput = async (req,res) => {
     try {
 
-        const {machine_no} = req.query
+        const {machine_no,part_no } = req.query
 
-        if(machine_no){
+        if(machine_no,part_no){
             const response = await TtransOutput.findAll({
                 where : {
-                    machine_no : machine_no
+                    machine_no : machine_no,
+                    part_no : part_no
                 }
             })
             res.json(response)
@@ -26,7 +27,16 @@ export const getTtransOutput = async (req,res) => {
 
 export const createTtransOutput = async (req,res) => {
     try {
-        await TtransOutput.create(req.body)
+
+        const {machine_no ,qty,current_time, part_no} = req.body
+
+
+        const time = handleLocalTime(current_time)
+
+
+        await TtransOutput.create({
+            machine_no,qty,time,part_no
+        })
         res.sendStatus(201)
     } catch (error) {
         console.log(error)

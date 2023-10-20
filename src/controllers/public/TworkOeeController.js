@@ -2,6 +2,8 @@ import { Op, literal } from "sequelize"
 import TmastShift from "../../model/modelData/master/TmastShift.js"
 import TworkOee from "../../model/modelData/public/TworkOee.js"
 import TtransStop from "../../model/modelData/transaction/TtransStop.js"
+import TtransOutput from "../../model/modelData/transaction/TtransOutput.js"
+import TmastProduct from "../../model/modelData/master/TmastProduct.js"
 
 export const getTworkOee = async (req,res) => {
     try {
@@ -30,15 +32,13 @@ export const createTworkOee = async (req,res) => {
                 where : {
                     machine_code : machine_no,
                     shift : shift_id,
-                    date : date
                 }
             })
-
-            if(!existDataInDataBase){
+            let loadingTime = 0
+            let downTime = 0
+            let operationTime = 0
+      //      if(!existDataInDataBase){
          
-
-
-                /* Start Create Availability */
 
                 // get Loading Time
                 const getTmastSHift = await TmastShift.findOne({
@@ -53,7 +53,7 @@ export const createTworkOee = async (req,res) => {
                 const hoursLoadingTime = parseInt(splitloadingTime[0]);
                 const minutesLoadingTime = parseInt(splitloadingTime[1]);
                 const secondsLoadingTime = parseInt(splitloadingTime[2]);
-                const loadingTime = (hoursLoadingTime * 60) + minutesLoadingTime + (secondsLoadingTime / 60);
+                loadingTime = (hoursLoadingTime * 60) + minutesLoadingTime + (secondsLoadingTime / 60);
 
                 // get Down Time
                 const getTtransStop = await TtransStop.findAll({
@@ -99,7 +99,7 @@ export const createTworkOee = async (req,res) => {
                 getTtransStop.forEach((data) => {
                     const dataVlues = data.dataValues
 
-                    if(dataVlues.duration !== null){
+                   if(dataVlues.duration !== null){
 
                     const durationParts = dataVlues.duration.split(':');
                     const hours = parseInt(durationParts[0]);
@@ -111,22 +111,46 @@ export const createTworkOee = async (req,res) => {
 
                   });
 
-                  const downTime = currentDownTime.toFixed(2);
+                   downTime = currentDownTime
 
+                // get Operation TIme
+                console.log("loading Time : " +loadingTime)
+                console.log("down TIme : " +downTime)
+                operationTime = loadingTime - downTime
+
+                const getProduct = await TmastProduct.findAll()
+                let totalDataCTxOutput = 0
+                await Promise.all(getProduct.map(async(itemProduct) => {
+                    const currentItem =  itemProduct.dataValues
+                    const ct = currentItem.ct / 1000
+                    const getTtransOutput = await TtransOutput.findAll({
+                        where : {
+                            machine_no : machine_no,
+                            part_no : currentItem.part_no
+                        }
+                    })
+                    const totalQty = getTtransOutput.reduce((accumulator, item) => accumulator + item.qty, 0);
+                    console.log( `Product Code =  ${currentItem.part_no}`)
+                    console.log( `Total qty di TtransOutput =  ${totalQty}`)
+                    console.log( `ct product =  ${ct}`)
+                    const countCTxTotalQTY = ct * totalQty
+                    console.log(countCTxTotalQTY)
+                    console.log('---------')
+                    totalDataCTxOutput += countCTxTotalQTY
+                }))
+                
+                console.log(`operation = ${operationTime}`)
                   const availability = (((loadingTime - downTime) / loadingTime) * 100).toFixed(2)
-                  return console.log(availability)
-
-                /* End Create Availability */
-
+                  const performance = ((totalDataCTxOutput/operationTime) * 100)
+                  console.log(` total data output setiap product = ${totalDataCTxOutput} / operaton Time ${operationTime} lalu di * 100 = ${performance}  `  )
+            
               
-
-
                 await TworkOee.create({
-                    machine_code : machine_no, shift : shift_id, date : date
+                    machine_code : machine_no, date : formatedDate , shift : shift_id, oee : null, avaibility : availability, performance : performance, quality : null
                 })
-            }else{
+         /*    }else{
                 console.log('awf')
-            }
+            } */
 
         }
           res.sendStatus(200)

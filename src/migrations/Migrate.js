@@ -20,18 +20,20 @@ const runMigrations = async () => {
     try {
         await Database.authenticate()
         console.log('Conection Success')
-/*         await TmastProduct.up(Database.getQueryInterface())
+        await TworkDisplay.up(Database.getQueryInterface())
+/*
+        await TmastProduct.up(Database.getQueryInterface())
+        await TtransOutput.up(Database.getQueryInterface())
         await TmastDefect.up(Database.getQueryInterface())
         await TmastKanban.up(Database.getQueryInterface())
         await TmastMachine.up(Database.getQueryInterface())
         await TmastSloc.up(Database.getQueryInterface())
         await TmastWarehouse.up(Database.getQueryInterface())
-        await TworkDisplay.up(Database.getQueryInterface())
         await TtransDefect.up(Database.getQueryInterface())
         await TtransOperation.up(Database.getQueryInterface())
-        await TtransOutput.up(Database.getQueryInterface())
+        
         await TtransStop.up(Database.getQueryInterface()) */
-        await TworkOee.up(Database.getQueryInterface())
+       // await TworkOee.up(Database.getQueryInterface())
        // await TmastShift.up(Database.getQueryInterface())
        // await TmastCategory.up(Database.getQueryInterface())
        // await TmastsubCategory.up(Database.getQueryInterface())

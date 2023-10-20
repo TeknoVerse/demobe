@@ -21,7 +21,11 @@ export const createTmastProduct = async (req,res) => {
             await TmastProduct.create(req.body)
             res.sendStatus(201)
         }else{
-            res.json({msg : "Data Already Exist"})
+            await TmastProduct.update(req.body, {
+                where : part_no
+            })
+         
+            res.json({msg : "Data Already Exist and has been updated"})
         }
     } catch (error) {
         console.log(error)

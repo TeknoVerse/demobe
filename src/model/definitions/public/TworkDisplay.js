@@ -9,6 +9,14 @@ export const tworkDisplayDefinition =  {
         primaryKey: true,
         autoIncrement : true
       },
+    time : {
+        type : DataTypes.STRING,
+        allowNull : true
+    },
+    date : {
+        type : DataTypes.DATE,
+        allowNull : true
+    },
     machine_no : {
         type : DataTypes.STRING,
         allowNull : true
@@ -18,6 +26,10 @@ export const tworkDisplayDefinition =  {
         allowNull : true
     },
     machine_group : {
+        type : DataTypes.STRING,
+        allowNull : true
+    },
+    part_code : {
         type : DataTypes.STRING,
         allowNull : true
     },

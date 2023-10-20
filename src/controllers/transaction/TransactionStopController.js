@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import TtransStop from "../../model/modelData/transaction/TtransStop.js";
 import TmastMachine from "../../model/modelData/master/TmastMachine.js";
+import {handleLocalTime} from "../MyFunction.js"
 
 export const getTtransStop = async (req, res) => {
   try {
@@ -27,28 +28,9 @@ export const createTtransStop = async (req, res) => {
 try {
   const {start, finish, machine_no, time ,category_code,sub_category_code} = req.body
   
+  const newTime = handleLocalTime(time)
 
-  const timeTolocalString = new Date(time).toLocaleTimeString()
-
-  // Membagi waktu menjadi jam, menit, detik, dan AM/PM
-    const timeParts = timeTolocalString.split(/:| /);
-
-    let hours24 = parseInt(timeParts[0]);
-    const minutes = parseInt(timeParts[1]);
-    const seconds = parseInt(timeParts[2]);
-    const ampm = timeParts[3].toUpperCase();
-
-    // Mengonversi waktu ke format 24 jam
-    if (ampm === "PM" && hours24 < 12) {
-      hours24 += 12;
-    } else if (ampm === "AM" && hours24 === 12) {
-      hours24 = 0;
-    }
-
-    // Format waktu dalam format "HH:MM:SS" (24 jam)
-    const newTime = `${hours24.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-
+  
   const newDate = new Date(time).toISOString('en-US', { hour12: false })
  
   

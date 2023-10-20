@@ -15,7 +15,7 @@ export const TmastProductDefinition = {
       type : DataTypes.STRING,
       allowNull : true
     },
-    qty : {
+    ct : {
       type : DataTypes.INTEGER,
       allowNull : true
     },

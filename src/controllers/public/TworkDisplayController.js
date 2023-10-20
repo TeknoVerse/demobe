@@ -2,11 +2,12 @@ import TworkDisplay from "../../model/modelData/public/TworkDisplay.js"
 
 export const getTworkDisplay = async (req,res) => {
     try {
-        const {id,machine_no} = req.query
-        if(machine_no) {
+        const {id,machine_no,part_code} = req.query
+        if(machine_no,part_code) {
             const response = await TworkDisplay.findOne({
                 where : {
-                    machine_no : machine_no
+                    machine_no : machine_no,
+                    part_code : part_code
                 }
             })
             res.json(response)
