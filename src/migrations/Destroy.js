@@ -11,13 +11,16 @@ import * as TtransDefect from "../model/modelMigration/transaction/TtransDefect.
 import * as TtransOperation from "../model/modelMigration/transaction/TtransOperation.js"
 import * as TtransOutput from "../model/modelMigration/transaction/TtransOutput.js"
 import * as TtransStop from "../model/modelMigration/transaction/TtransStop.js"
+import * as TworkOee from "../model/modelMigration/public/TworkOee.js"
+import * as TmastShift from "../model/modelMigration/master/TmastShift.js"
+
 
 
 const runRollback = async () => {
     try {
         await Database.authenticate()
         console.log('Conection Success')
-        await TmastProduct.down(Database.getQueryInterface())
+    /*     await TmastProduct.down(Database.getQueryInterface())
         await TmastDefect.down(Database.getQueryInterface())
         await TmastKanban.down(Database.getQueryInterface())
         await TmastMachine.down(Database.getQueryInterface())
@@ -27,9 +30,11 @@ const runRollback = async () => {
         await TtransDefect.down(Database.getQueryInterface())
         await TtransOperation.down(Database.getQueryInterface())
         await TtransOutput.down(Database.getQueryInterface())
-        await TtransStop.down(Database.getQueryInterface())
-        console.log('Migration Success fully')
-
+        await TtransStop.down(Database.getQueryInterface()) */
+        await TworkOee.down(Database.getQueryInterface())
+        //await TmastShift.down(Database.getQueryInterface())
+        console.log('Migration Destroy Success fully')
+q
     } catch (error) {
         console.error('Conection Failed')
     } finally {

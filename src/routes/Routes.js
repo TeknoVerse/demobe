@@ -1,5 +1,7 @@
 import express from "express"
 import { createTmastMachine, deleteTmastMachine, getTmastMachine, updateTmastMachine } from "../controllers/master/MasterMachineController.js"
+import { createTmastCategory, deleteTmastCategory, getTmastCategory, updateTmastCategory} from "../controllers/master/MasterCategoryController.js"
+import { createTmastSubCategory, deleteTmastSubCategory, getTmastSubCategory, updateTmastSubCategory } from "../controllers/master/MasterSubCategoryController.js"
 import { createTmastDefect, deleteTmastDefect, getTmastDefect, updateTmastDefect } from "../controllers/master/MasterDefectCOntroller.js"
 import { createTmastProduct, deleteTmastProduct, getTmastProduct, updateTmastProduct } from "../controllers/master/MasterProductCOntroller.js"
 import { createTtransDefect, deleteTtransDefect, getTtransDefect, updateTtransDefect } from "../controllers/transaction/TransactionDefectController.js"
@@ -10,6 +12,10 @@ import { createTworkDisplay, deleteTworkDisplay, getTworkDisplay, updateTworkDis
 import { createTmastSloc, deleteTmastSloc, getTmastSloc, updateTmastSloc } from "../controllers/master/MasterSlocController.js"
 import { createTmastKanban, deleteTmastKanban, getTmastKanban, updateTmastKanban } from "../controllers/master/MasterKanbanCOntroller.js"
 import { createTmastWarehouse, deleteTmastWarehouse, getTmastWarehouse, updateTmastWarehouse } from "../controllers/master/TmastWarehouseController.js"
+
+import { createTworkOee, deleteTworkOee, getTworkOee, updateTworkOee } from "../controllers/public/TworkOeeController.js"
+import { getTmastShift } from "../controllers/master/MasterShiftController.js"
+
 //import {} from "../controllers/master/"
 const Routes = new express.Router()
 
@@ -29,6 +35,10 @@ Routes.post('/machine', createTmastMachine)
 Routes.patch('/machine', updateTmastMachine)
 Routes.delete('/machine', deleteTmastMachine)
 /* End Tmast Machine */
+
+/* Start Tmast Shift */
+Routes.get('/shift', getTmastShift )
+/* End Tmast Shift */
 
 /* Start Tmast Defect */
 Routes.get('/defect', getTmastDefect)
@@ -58,6 +68,20 @@ Routes.patch('/kanban', updateTmastKanban)
 Routes.delete('/kanban', deleteTmastKanban)
 /* End Tmast Kanban */
 
+/* Start Tmast Category */
+Routes.get('/category', getTmastCategory )
+Routes.post('/category', createTmastCategory)
+Routes.patch('/category', updateTmastCategory)
+Routes.delete('/category', deleteTmastCategory)
+/* End Tmast Category */
+
+/* Start Tmast Sub Category */
+Routes.get('/sub-category', getTmastSubCategory )
+Routes.post('/sub-category', createTmastSubCategory)
+Routes.patch('/sub-category', updateTmastSubCategory)
+Routes.delete('/sub-category', deleteTmastSubCategory)
+/* End Tmast Sub Category */
+
 /* --------------- End Master --------------- */
 
 
@@ -85,10 +109,10 @@ Routes.delete('/trans_output', deleteTtransOutput)
 /* End Transaction Output */
 
 /* Start Transaction Stop */
-Routes.get('/trans_stop', getTtransStop)
-Routes.post('/trans_stop', createTtransStop)
-Routes.patch('/trans_stop', updateTtransStop)
-Routes.delete('/trans_stop', deleteTtransStop)
+Routes.get('/ttrans_stop', getTtransStop)
+Routes.post('/ttrans_stop', createTtransStop)
+Routes.patch('/ttrans_stop', updateTtransStop)
+Routes.delete('/ttrans_stop', deleteTtransStop)
 /* End Transaction Stop */
 
 
@@ -102,6 +126,13 @@ Routes.post('/twork_display', createTworkDisplay)
 Routes.patch('/twork_display', updateTworkDisplay)
 Routes.delete('/twork_display', deleteTworkDisplay)
 /* End Public Twork Display */
+
+/* Start Public Twork Oee */
+Routes.get('/twork_oee', getTworkOee)
+Routes.post('/twork_oee', createTworkOee)
+Routes.patch('/twork_oee', updateTworkOee)
+Routes.delete('/twork_oee', deleteTworkOee)
+/* End Public Twork Oee */
 
 /* --------------- End Public --------------- */
 

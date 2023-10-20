@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize"
 
+
 export const TmastProductDefinition = {
   id : {
     type : DataTypes.INTEGER,

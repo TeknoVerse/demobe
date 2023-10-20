@@ -1,95 +1,62 @@
+import { DataTypes } from "sequelize";
 
-
-import { DataTypes } from "sequelize"
 
 export const tmastMachineDefinition = {
-    id : {
-        type : DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement : true
-      },
-    machine_name :{
-        type : DataTypes.STRING,
-        allowNull : true
-    }, 
-    machine_no :{
-        type : DataTypes.STRING,
-        allowNull : true
-    },
-    line_group :{
-        type : DataTypes.STRING,
-        allowNull : true
-    }, 
-    npk :{
-        type : DataTypes.STRING,
-        allowNull : true
-    },
-    assy_no :{
-        type : DataTypes.STRING,
-        allowNull : true
-    },
-    circuit_no :{
-        type : DataTypes.STRING,
-        allowNull : true
-    },
-    ct :{
-        type : DataTypes.FLOAT,
-        allowNull : true
-    },
-    qty_perct :{
-        type : DataTypes.INTEGER,
-        allowNull : true
-    },
-    status_start :{
-        type : DataTypes.BOOLEAN,
-        allowNull : true
-    },
-    status_yellow :{
-        type : DataTypes.BOOLEAN,
-        allowNull : true
-    },
-    status_red :{
-        type : DataTypes.BOOLEAN,
-        allowNull : true
-    },
-    code_aplicator_a :{
-        type : DataTypes.INTEGER,
-        allowNull : true
-    },
-    qty_aplicator_a :{
-        type : DataTypes.INTEGER,
-        allowNull : true
-    },
-    code_aplicator_b :{
-        type : DataTypes.INTEGER,
-        allowNull : true
-    },
-    qty_aplicator_b :{
-        type : DataTypes.INTEGER,
-        allowNull : true
-    },
-    wire_part_no :{
-        type : DataTypes.INTEGER,
-        allowNull : true
-    },
-    terminal_left :{
-        type : DataTypes.INTEGER,
-        allowNull : true
-    },
-    terminal_right :{
-        type : DataTypes.INTEGER,
-        allowNull : true
-    },
-    status_checking :{
-        type : DataTypes.BOOLEAN,
-        allowNull : true
-    },
-    createdAt : {
-        type : DataTypes.DATE
-            }, 
-            updatedAt : {
-                type : DataTypes.DATE
-        
-            }
-
-}
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+   
+  },
+ code : {
+    type : DataTypes.STRING,
+    allowNull : true
+ },
+ name : {
+    type : DataTypes.STRING,
+    allowNull : true
+ },
+ status_green : {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    
+    allowNull : true
+ },
+ status_yellow : {
+    defaultValue: false,
+    type: DataTypes.BOOLEAN,
+    allowNull : true
+ },
+ status_red : {
+    defaultValue: false,
+    type: DataTypes.BOOLEAN,
+    allowNull : true
+ },
+ category : {
+    type : DataTypes.STRING ,
+    allowNull : true
+ },
+ part_no : {
+    type : DataTypes.STRING ,
+    allowNull : true
+ },
+ part_name : {
+    type : DataTypes.STRING ,
+    allowNull : true
+ },
+ ct : {
+    type : DataTypes.STRING ,
+    allowNull : true
+ },
+ qty : {
+    type : DataTypes.STRING ,
+    allowNull : true
+ },
+ 
+ createdAt: {
+    type: DataTypes.DATE,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+  },
+};

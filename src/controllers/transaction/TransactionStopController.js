@@ -1,7 +1,189 @@
 import { Sequelize } from "sequelize";
 import TtransStop from "../../model/modelData/transaction/TtransStop.js";
+import TmastMachine from "../../model/modelData/master/TmastMachine.js";
 
 export const getTtransStop = async (req, res) => {
+  try {
+    const { id_con, machine_no, category } = req.query;
+
+    if(machine_no) {
+      const response = await TtransStop.findAll({
+        where : {
+          machine_no : machine_no
+        }
+      })
+      res.json(response)
+    }else{
+      const response = await TtransStop.findAll()
+      res.json(response)
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createTtransStop = async (req, res) => {
+try {
+  const {start, finish, machine_no, time ,category_code,sub_category_code} = req.body
+  
+
+  const timeTolocalString = new Date(time).toLocaleTimeString()
+
+  // Membagi waktu menjadi jam, menit, detik, dan AM/PM
+    const timeParts = timeTolocalString.split(/:| /);
+
+    let hours24 = parseInt(timeParts[0]);
+    const minutes = parseInt(timeParts[1]);
+    const seconds = parseInt(timeParts[2]);
+    const ampm = timeParts[3].toUpperCase();
+
+    // Mengonversi waktu ke format 24 jam
+    if (ampm === "PM" && hours24 < 12) {
+      hours24 += 12;
+    } else if (ampm === "AM" && hours24 === 12) {
+      hours24 = 0;
+    }
+
+    // Format waktu dalam format "HH:MM:SS" (24 jam)
+    const newTime = `${hours24.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+
+  const newDate = new Date(time).toISOString('en-US', { hour12: false })
+ 
+  
+
+  if(machine_no){
+    const getTtransStopByMachineNo = await TtransStop.findOne({
+      attributes : [[Sequelize.fn('max', Sequelize.col('id')), "max_id" ]],
+      where: {
+        machine_no: machine_no,
+      },
+    })
+
+    const getMachine = await TmastMachine.findOne({
+      where : {
+        code : machine_no
+      }
+    })
+
+    if (getTtransStopByMachineNo && getTtransStopByMachineNo.dataValues.max_id) {
+      const maxId = getTtransStopByMachineNo.dataValues.max_id;
+      const currentData = await TtransStop.findOne({
+        where : {
+          id : maxId
+        }
+      })
+      const currentDatavalues = currentData.dataValues
+      
+  
+      if( getMachine.category === null && currentDatavalues.finish === null) {
+          /* Start Time */
+          const startTimeParts = currentDatavalues.start.split(':');
+          const startHours = parseInt(startTimeParts[0]);
+          const startMinutes = parseInt(startTimeParts[1]);
+          const startSeconds = parseInt(startTimeParts[2]);
+          const startInSeconds = startHours * 3600 + startMinutes * 60 + startSeconds;
+          /* Start Time */
+      
+
+          /* Finish Time (dalam format HH:mm:ss) */
+            const finishTimeParts = newTime.split(':');
+            const finishHours = parseInt(finishTimeParts[0]);
+            const finishMinutes = parseInt(finishTimeParts[1]);
+            const finishSeconds = parseInt(finishTimeParts[2]);
+            const finishInSeconds = finishHours * 3600 + finishMinutes * 60 + finishSeconds;
+            /* Finish Time */
+
+          /* Finsih Time */
+        /*   const finishDate = new Date(time);
+          const finishInSeconds = finishDate.getUTCHours() * 3600 + finishDate.getUTCMinutes() * 60 + finishDate.getUTCSeconds();
+           *//* Finsih Time */
+          
+          const totalInSeconds = finishInSeconds - startInSeconds;
+
+          const totalHours = Math.floor(totalInSeconds / 3600);
+          const totalMinutes = Math.floor((totalInSeconds % 3600) / 60);
+          const totalSeconds = totalInSeconds % 60;
+
+          /* Format to 00:00:00 */
+          const formattedResult = `${totalHours.toString().padStart(2, '0')}:${totalMinutes.toString().padStart(2, '0')}:${totalSeconds.toString().padStart(2, '0')}`;
+          /* Format to 00:00:00 */
+
+          await TtransStop.update(
+            {
+            finish : newTime,
+            duration : formattedResult},{
+            where : {
+              id : maxId
+            }
+          })
+        
+      }else{
+     //   if(  currentDatavalues.start !== null && currentDatavalues.finish !== null ){
+       
+          await TtransStop.create({
+            machine_no : machine_no,
+            start : newTime,
+            category_code : category_code,
+            sub_category_code : sub_category_code,
+            work_date : newDate,
+    
+          }) 
+          res.sendStatus(200)
+     
+
+      }
+    }else{
+      if( getMachine.category !== null ){
+        await TtransStop.create({
+          machine_no : machine_no,
+          start : newTime,
+          category_code : category_code,
+          sub_category_code : sub_category_code,
+          work_date : newDate,
+        })
+        res.sendStatus(200)
+      }else{
+        await TtransStop.create({
+          machine_no : machine_no,
+          finish : newTime,
+          category_code : category_code,
+          sub_category_code : sub_category_code,
+          work_date : newDate,
+        })
+        res.sendStatus(200)
+      
+      }
+    }
+  }
+} catch (error) {
+  console.log(error)
+}
+};
+
+export const deleteTtransStop = async (req, res) => {
+  try {
+    const { id } = req.query;
+    await TtransStop.destroy({
+      where: {
+        id: id,
+      },
+    });
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateTtransStop = async (req, res) => {
+try {
+  
+} catch (error) {
+  console.log(error)
+}
+};
+/* export const getTtransStop = async (req, res) => {
   try {
     const { id_con, machine_no, category } = req.query;
     if ((id_con === "max") & (category === "problem")) {
@@ -157,3 +339,4 @@ export const updateTtransStop = async (req, res) => {
     console.log(error);
   }
 };
+ */

@@ -24,10 +24,6 @@ export const ttransOutputDefinition = {
         type : DataTypes.STRING,
         allowNull : true
     },
-    npk  : {
-        type : DataTypes.STRING,
-        allowNull : true
-    },
     qty  : {
         type : DataTypes.INTEGER,
         allowNull : true
@@ -40,7 +36,7 @@ export const ttransOutputDefinition = {
         type : DataTypes.STRING,
         allowNull : true
     },
-    wire_part_no  : {
+    part_no  : {
         type : DataTypes.STRING,
         allowNull : true
     },

@@ -11,12 +11,16 @@ import * as TtransDefect from "../model/modelMigration/transaction/TtransDefect.
 import * as TtransOperation from "../model/modelMigration/transaction/TtransOperation.js"
 import * as TtransOutput from "../model/modelMigration/transaction/TtransOutput.js"
 import * as TtransStop from "../model/modelMigration/transaction/TtransStop.js"
+import * as TworkOee from "../model/modelMigration/public/TworkOee.js"
+import * as TmastShift from "../model/modelMigration/master/TmastShift.js"
+import * as TmastCategory from "../model/modelMigration/master/TmastCategory.js"
+import * as TmastsubCategory from "../model/modelMigration/master/TmastSubCategory.js"
 
 const runMigrations = async () => {
     try {
         await Database.authenticate()
         console.log('Conection Success')
-        await TmastProduct.up(Database.getQueryInterface())
+/*         await TmastProduct.up(Database.getQueryInterface())
         await TmastDefect.up(Database.getQueryInterface())
         await TmastKanban.up(Database.getQueryInterface())
         await TmastMachine.up(Database.getQueryInterface())
@@ -26,7 +30,11 @@ const runMigrations = async () => {
         await TtransDefect.up(Database.getQueryInterface())
         await TtransOperation.up(Database.getQueryInterface())
         await TtransOutput.up(Database.getQueryInterface())
-        await TtransStop.up(Database.getQueryInterface())
+        await TtransStop.up(Database.getQueryInterface()) */
+        await TworkOee.up(Database.getQueryInterface())
+       // await TmastShift.up(Database.getQueryInterface())
+       // await TmastCategory.up(Database.getQueryInterface())
+       // await TmastsubCategory.up(Database.getQueryInterface())
         console.log('Migration Success fully')
 
     } catch (error) {

@@ -26,11 +26,11 @@ export const ttransOperationDefinition = {
         allowNull : true
     },
     start : {
-        type : DataTypes.TIME,
+        type : DataTypes.DATE,
         allowNull : true
     },
     finish : {
-        type : DataTypes.TIME,
+        type : DataTypes.DATE,
         allowNull : true
     },
     createdAt : {
