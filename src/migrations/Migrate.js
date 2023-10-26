@@ -15,16 +15,19 @@ import * as TworkOee from "../model/modelMigration/public/TworkOee.js"
 import * as TmastShift from "../model/modelMigration/master/TmastShift.js"
 import * as TmastCategory from "../model/modelMigration/master/TmastCategory.js"
 import * as TmastsubCategory from "../model/modelMigration/master/TmastSubCategory.js"
-
+import * as TmastMAchineGroup from "../model/modelMigration/master/TmastMachineGroup.js"
 const runMigrations = async () => {
     try {
         await Database.authenticate()
         console.log('Conection Success')
-        await TworkDisplay.up(Database.getQueryInterface())
+    /*     await TworkDisplay.up(Database.getQueryInterface())
+        await TmastMAchineGroup.up(Database.getQueryInterface()) */
+
 /*
         await TmastProduct.up(Database.getQueryInterface())
-        await TtransOutput.up(Database.getQueryInterface())
         await TmastDefect.up(Database.getQueryInterface())
+
+        await TtransOutput.up(Database.getQueryInterface())
         await TmastKanban.up(Database.getQueryInterface())
         await TmastMachine.up(Database.getQueryInterface())
         await TmastSloc.up(Database.getQueryInterface())

@@ -88,10 +88,10 @@ Routes.delete('/sub-category', deleteTmastSubCategory)
 /* --------------- Start Transaction --------------- *
 
 /* Start Transaction Defect */
-Routes.get('/trans_defect', getTtransDefect)
-Routes.post('/trans_defect', createTtransDefect)
-Routes.patch('/trans_defect', updateTtransDefect)
-Routes.delete('/trans_defect', deleteTtransDefect)
+Routes.get('/ttrans_defect', getTtransDefect)
+Routes.post('/ttrans_defect', createTtransDefect)
+Routes.patch('/ttrans_defect', updateTtransDefect)
+Routes.delete('/ttrans_defect', deleteTtransDefect)
 /* End Transaction Defect */
 
 /* Start Transaction Operation */

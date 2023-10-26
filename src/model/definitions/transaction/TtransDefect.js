@@ -28,7 +28,7 @@ export const ttransDefectDefinition = {
         type : DataTypes.STRING,
         allowNull : true
     },
-    assy_no : { 
+    part_no : { 
         type : DataTypes.STRING,
         allowNull : true
     },
@@ -62,6 +62,10 @@ export const ttransDefectDefinition = {
     },
     terminal_left : { 
         type : DataTypes.STRING,
+        allowNull : true
+    },
+    work_date : { 
+        type : DataTypes.DATE,
         allowNull : true
     },
     terminal_right : { 

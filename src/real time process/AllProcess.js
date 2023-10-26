@@ -4,6 +4,25 @@ import TworkDisplay from "../model/modelData/public/TworkDisplay.js";
 import TtransOperation from "../model/modelData/transaction/TtransOperation.js";
 import schedule from "node-schedule";
 
+
+
+function ItemComponent({ itemData }) {
+  const { data, time } = itemData;
+
+  useEffect(() => {
+    // Lakukan sesuatu dengan itemData
+    const timer = setInterval(() => {
+      // Lakukan sesuatu setiap "time" milidetik
+    }, time);
+
+    return () => {
+      clearInterval(timer); // Hentikan timer saat komponen dibersihkan
+    };
+  }, [data, time]);
+
+
+}
+
 export const addPlanningTworkDisplay = async () => {
   try {
     let addTaks = [];
@@ -11,7 +30,40 @@ export const addPlanningTworkDisplay = async () => {
     let getTworkDisplay = [];
     let getttransOperation = [];
 
+    let oldData = []
+    let newData = []
+    const executeTakss = async (data) => {
+      if(oldData.length === 0){
+        oldData = data
+      }else{
+        data.map((itemData,index) => {
+            const cekDataId = 
+            oldData.find((oldDataItem) => {
+              return oldDataItem.machine_no === itemData.machine_no
+            }) 
+            if(cekDataId.part_code !== itemData.part_code){
+              
+           
+            }
+
+         /*    const cekMachine = getttransOperation.find(
+              (itemMachine) => itemMachine.machine_no === machine_no
+            ); */
+        })
+
+
+
+      }
+
+        
+
+
+    }
+
     const executeTaks = async (item) => {
+
+
+      
       if (
         !addTaks.some(
           (taksItem) =>
@@ -50,6 +102,8 @@ export const addPlanningTworkDisplay = async () => {
       }
     };
 
+  
+
     setInterval(async () => {
       getMachine = await TmastMachine.findAll();
       getTworkDisplay = await TworkDisplay.findAll();
@@ -58,7 +112,8 @@ export const addPlanningTworkDisplay = async () => {
         console.log("Data Machine null");
       } else {
         getMachine.map(async (datamachine) => {
-          const foundInTworkDisplay = getTworkDisplay.find(
+          const foundInTworkDisplay =
+           getTworkDisplay.find(
             (dataTwork) => 
             dataTwork.machine_no === datamachine.code &&
             dataTwork.part_code === datamachine.part_no 
@@ -72,7 +127,9 @@ export const addPlanningTworkDisplay = async () => {
             });
           }
         });
-/*  */
+
+  
+
         const dataWithMyCt = getTworkDisplay.map((itemDisplay) => {
           const matchMachine = getMachine.find(
             (itemMachine) => itemMachine.code === itemDisplay.machine_no
@@ -82,6 +139,9 @@ export const addPlanningTworkDisplay = async () => {
             my_ct: matchMachine ? matchMachine.ct : 0,
           };
         });
+
+        executeTaks(dataWithMyCt)
+     
         const promises = dataWithMyCt.map(executeTaks);
 
         Promise.allSettled(promises).then(() => {

@@ -6,11 +6,11 @@ export const tmastDefectDefinition = {
     primaryKey: true,
     autoIncrement: true,
   },
-  category_code: {
+  code: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  category_name: {
+  name: {
     type: DataTypes.STRING,
     allowNull: true,
   },

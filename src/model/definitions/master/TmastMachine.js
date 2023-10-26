@@ -52,7 +52,10 @@ export const tmastMachineDefinition = {
     type : DataTypes.STRING ,
     allowNull : true
  },
- 
+ machine_group_code : {
+    type : DataTypes.STRING ,
+    allowNull : true
+ },
  createdAt: {
     type: DataTypes.DATE,
   },

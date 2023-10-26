@@ -32,10 +32,11 @@ export const createTtransOutput = async (req,res) => {
 
 
         const time = handleLocalTime(current_time)
+        const date = new Date(current_time).toISOString()
 
 
         await TtransOutput.create({
-            machine_no,qty,time,part_no
+            machine_no,qty,time,part_no, work_date : date
         })
         res.sendStatus(201)
     } catch (error) {

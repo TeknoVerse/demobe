@@ -2,8 +2,21 @@ import TmastDefect from "../../model/modelData/master/TmastDefect.js"
 
 export const getTmastDefect = async (req,res) => {
     try {
+        const {machine_group} = req.query
+
+        if(machine_group){
+            const response = await TmastDefect.findAll({
+                where : {
+                    machine_group : machine_group
+                }
+            })
+            res.json(response)
+        }else{
+
         const response = await TmastDefect.findAll()
         res.json(response)
+    }
+
     } catch (error) {
         console.log(error)
     }
