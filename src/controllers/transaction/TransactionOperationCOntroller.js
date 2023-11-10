@@ -7,6 +7,7 @@ export const getTtransOperation = async (req,res) => {
         const {id_con, machine_no} = req.query
         if(id_con === "max"){
             const maxIdData = await TtransOperation.findOne({
+             //   attributes: [  [Sequelize.literal('MAX("id")'), 'max_id']],
                 attributes: [[ Sequelize.fn('max',  Sequelize.col('id')), 'max_id']],
                 where: {
                   machine_no: machine_no

@@ -1,4 +1,5 @@
 import TmastWarehouse from "../../model/modelData/master/TmastWarehouse.js"
+import { Sequelize } from "sequelize"
 
 export const getTmastWarehouse = async (req,res) => {
     try {
@@ -11,7 +12,7 @@ export const getTmastWarehouse = async (req,res) => {
 
 export const createTmastWarehouse = async (req,res) => {
     try {
-        const {sloc_code, part_code} = req.body
+        const {sloc_code, part_code,qty} = req.body
 
         const cekExistProduct = await TmastWarehouse.findOne({
             where : {
@@ -23,7 +24,15 @@ export const createTmastWarehouse = async (req,res) => {
             await TmastWarehouse.create(req.body)
             res.sendStatus(201)
         }else{
-            res.json({msg : "Data Already Exist"})
+            await TmastWarehouse.update({
+                qty: Sequelize.literal(`COALESCE(qty, 0) + ${qty}`)
+
+            } ,{
+                where : {
+                    sloc_code : sloc_code,
+                    part_code : part_code
+                }
+            })
         }
 
    
