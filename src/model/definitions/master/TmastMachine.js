@@ -32,6 +32,11 @@ export const tmastMachineDefinition = {
     type: DataTypes.BOOLEAN,
     allowNull : true
  },
+ defect : {
+    defaultValue: false,
+    type: DataTypes.BOOLEAN,
+    allowNull : true
+ },
  category : {
     type : DataTypes.STRING ,
     allowNull : true

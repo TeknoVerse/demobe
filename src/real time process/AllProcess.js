@@ -97,7 +97,13 @@ export const addPlanningTworkDisplay = async () => {
      
 
       
+       /*    const allJobs = schedule.scheduledJobs;
 
+          // Batalkan semua pekerjaan
+          for (const jobId in allJobs) {
+              schedule.cancelJob(allJobs[jobId]);
+          } */
+          
     
       }
     };
@@ -126,8 +132,23 @@ export const addPlanningTworkDisplay = async () => {
               ctime: 0,
             });
           }
-        });
+        })
+        getTworkDisplay.map(async (dataTwork) => {
+          const existDataInMachine = 
+          getMachine.find((dataMachine => 
+            dataMachine.code === dataTwork.machine_no &&
+            dataMachine.part_no === dataTwork.part_code
+            ))
 
+          if(!existDataInMachine){
+            await TworkDisplay.destroy({
+              where : {
+                id : dataTwork.id
+              }
+            })
+          }
+        })
+        
   
 
         const dataWithMyCt = getTworkDisplay.map((itemDisplay) => {
@@ -150,6 +171,7 @@ export const addPlanningTworkDisplay = async () => {
        
         
       }
+
     }, 1000);
   } catch (error) {
     console.log(error);

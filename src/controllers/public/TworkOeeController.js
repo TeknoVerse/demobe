@@ -72,13 +72,9 @@ export const createTworkOee = async (req, res) => {
                 {
                   start: {
                     [Op.gte]: startShift,
-                  },
-                },
-                {
-                  start: {
                     [Op.lte]: endShift,
                   },
-                },
+                }
               ],
             },
             {
@@ -86,13 +82,10 @@ export const createTworkOee = async (req, res) => {
                 {
                   finish: {
                     [Op.gte]: startShift,
-                  },
-                },
-                {
-                  finish: {
                     [Op.lte]: endShift,
+
                   },
-                },
+                }
               ],
             },
           ],

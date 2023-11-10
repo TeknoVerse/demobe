@@ -29,11 +29,11 @@ export const createTtransOutput = async (req,res) => {
     try {
 
         const {machine_no ,qty,current_time, part_no} = req.body
-
-
-        const time = handleLocalTime(current_time)
-        const date = new Date(current_time).toISOString()
-
+        console.log(machine_no ,qty,current_time, part_no)
+    
+         const    time = handleLocalTime(current_time)
+          const   date = new Date(current_time).toISOString()
+        
 
         await TtransOutput.create({
             machine_no,qty,time,part_no, work_date : date

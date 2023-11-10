@@ -19,6 +19,10 @@ export const TmastProductDefinition = {
       type : DataTypes.INTEGER,
       allowNull : true
     },
+    qty : {
+      type : DataTypes.INTEGER,
+      allowNull : true
+    },
     createdAt : {
       type : DataTypes.DATE
           }, 

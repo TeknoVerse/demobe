@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({extended : false}))
 app.use(bodyParser.json())
 app.use(express.json())
 app.use(cookieParser())
-/* app.use(cors({credentials : true, origin : "http://localhost:3000"})) */
+//app.use(cors({credentials : true, origin : "http://192.168.1.4:3000"})) 
 app.use(cors())
 app.use(Routes)
 addPlanningTworkDisplay()
