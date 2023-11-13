@@ -7,5 +7,4 @@ const Database = new Sequelize(db_name, db_user, db_pass, {
 })
 
 
-
 export default Database
