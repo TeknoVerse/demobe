@@ -1,6 +1,5 @@
 import TmastMachine from "../../model/modelData/master/TmastMachine.js"
 import { addPlanningTworkDisplay } from "../../real time process/AllProcess.js"
-
 export const getTmastMachine = async (req,res) => {
     try {
         const response = await TmastMachine.findAll()
@@ -40,21 +39,27 @@ export const deleteTmastMachine = async(req,res) => {
 export const updateTmastMachine = async (req,res) => {
     try {
         const {id,code} = req.query
-        if(id) {
-        await TmastMachine.update(req.body , {
+      /*   if(id) { */
+ /*        await TmastMachine.update(req.body , {
             where : {
                 id : id
             }
-        })
-        addPlanningTworkDisplay()
-    }
-    if(code){
-        await TmastMachine.update(req.body , {
-            where : {
-                code : code
-            }
-        })
-    }
+        }) */
+/*     }
+ */
+if(id){
+   const post = () => new Promise(async() => {
+    await TmastMachine.update(req.body , {
+        where : {
+            id : id
+        }
+    })
+   })  
+
+   post().then(() => addPlanningTworkDisplay())
+} 
+        
+
         res.sendStatus(200)
     } catch (error) {
         console.log(error)

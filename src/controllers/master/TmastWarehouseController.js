@@ -26,6 +26,7 @@ export const createTmastWarehouse = async (req, res) => {
         await TmastWarehouse.update(
           {
             qty: Sequelize.literal(`COALESCE(qty, 0) - ${qty}`),
+            part_name : part_name
           },
           {
             where: {
@@ -52,6 +53,8 @@ export const createTmastWarehouse = async (req, res) => {
           await TmastWarehouse.update(
             {
               qty: Sequelize.literal(`COALESCE(qty, 0) + ${qty}`),
+            part_name : part_name
+
             },
             {
               where: {
@@ -78,6 +81,8 @@ export const createTmastWarehouse = async (req, res) => {
         await TmastWarehouse.update(
           {
             qty: Sequelize.literal(`COALESCE(qty, 0) + ${qty}`),
+            part_name : part_name
+
           },
           {
             where: {

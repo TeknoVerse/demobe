@@ -26,7 +26,7 @@ export const getTtransStop = async (req, res) => {
 
 export const createTtransStop = async (req, res) => {
 try {
-  const {start, finish, machine_no, time ,category_code,sub_category_code} = req.body
+  const {start, options, machine_no, time ,category_code,sub_category_code} = req.body
   
   const newTime = handleLocalTime(time)
 
@@ -59,7 +59,7 @@ try {
       const currentDatavalues = currentData.dataValues
       
   
-      if( getMachine.category === null && currentDatavalues.finish === null) {
+      if( (getMachine.category === null && currentDatavalues.finish === null) || options === "process") {
           /* Start Time */
           const startTimeParts = currentDatavalues.start.split(':');
           const startHours = parseInt(startTimeParts[0]);
@@ -92,14 +92,54 @@ try {
           const formattedResult = `${totalHours.toString().padStart(2, '0')}:${totalMinutes.toString().padStart(2, '0')}:${totalSeconds.toString().padStart(2, '0')}`;
           /* Format to 00:00:00 */
 
-          await TtransStop.update(
-            {
-            finish : newTime,
-            duration : formattedResult},{
-            where : {
-              id : maxId
+
+
+          if(options === "process"){
+            await TtransStop.update(
+              {
+              category_code : category_code,
+              sub_category_code : sub_category_code,
+              },{
+              where : {
+                id : maxId
+              }
+            })
+          }else{
+          
+              if(options === "end"){
+
+              await TtransStop.update(
+                {
+                finish : newTime,
+                duration : formattedResult,
+                },{
+                where : {
+                  id : maxId
+                }
+              })
+            }else{
+              if(currentDatavalues.finish === null){
+                await TtransStop.update(
+                  {
+                  finish : newTime,
+                  duration : formattedResult,
+                  },{
+                  where : {
+                    id : maxId
+                  }
+                })
+                await TtransStop.create({
+                  machine_no : machine_no,
+                  start : newTime,
+                  work_date : newDate,
+          
+                }) 
+
+              }
             }
-          })
+         
+          }
+
         
       }else{
      //   if(  currentDatavalues.start !== null && currentDatavalues.finish !== null ){
@@ -107,8 +147,6 @@ try {
           await TtransStop.create({
             machine_no : machine_no,
             start : newTime,
-            category_code : category_code,
-            sub_category_code : sub_category_code,
             work_date : newDate,
     
           }) 
@@ -130,6 +168,13 @@ try {
         await TtransStop.create({
           machine_no : machine_no,
           finish : newTime,
+          category_code : category_code,
+          sub_category_code : sub_category_code,
+          work_date : newDate,
+        })
+        await TtransStop.create({
+          machine_no : machine_no,
+          start : newTime,
           category_code : category_code,
           sub_category_code : sub_category_code,
           work_date : newDate,
