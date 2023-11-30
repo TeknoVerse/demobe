@@ -1,81 +1,96 @@
-import { Sequelize } from "sequelize";
+import { Op, Sequelize, literal } from "sequelize";
 import TmastMachine from "../model/modelData/master/TmastMachine.js";
 import TworkDisplay from "../model/modelData/public/TworkDisplay.js";
 import TtransOperation from "../model/modelData/transaction/TtransOperation.js";
 import schedule from "node-schedule";
-
-
-
-function ItemComponent({ itemData }) {
-  const { data, time } = itemData;
-
-  useEffect(() => {
-    // Lakukan sesuatu dengan itemData
-    const timer = setInterval(() => {
-      // Lakukan sesuatu setiap "time" milidetik
-    }, time);
-
-    return () => {
-      clearInterval(timer); // Hentikan timer saat komponen dibersihkan
-    };
-  }, [data, time]);
-
-
-}
+import TtransStop from "../model/modelData/transaction/TtransStop.js";
+import TmastShift from "../model/modelData/master/TmastShift.js";
 
 export const addPlanningTworkDisplay = async () => {
   try {
+
     let addTaks = [];
     let getMachine = [];
     let getTworkDisplay = [];
     let getttransOperation = [];
+    let getttransStop = [];
+    let getTmastSHift = [];
 
-    let oldData = []
-    
     const allJobs = schedule.scheduledJobs;
-    // Batalkan semua pekerjaan
-    new Promise(async() => {
-      for (const jobId in allJobs) {
-        schedule.cancelJob(allJobs[jobId]);
-    } 
-    })
-   
 
-    const executeTakss = async (data) => {
-      if(oldData.length === 0){
-        oldData = data
-      }else{
-        data.map((itemData,index) => {
-            const cekDataId = 
-            oldData.find((oldDataItem) => {
-              return oldDataItem.machine_no === itemData.machine_no
-            }) 
-            if(cekDataId.part_code !== itemData.part_code){
-              
-           
-            }
-
-         /*    const cekMachine = getttransOperation.find(
-              (itemMachine) => itemMachine.machine_no === machine_no
-            ); */
-        })
-
-
-
-      }
-
-        
-
-
-    }
-   
-   
-    new Promise(async() => {
+    
+    const currentTime = new Date()
+    const time = currentTime.toTimeString().split(' ')[0] /* 24:00:00 */
+    const date = currentTime.toISOString().split('T')?.[0] /* 00-00-00 */
       
       setInterval(async () => {
         getMachine = await TmastMachine.findAll();
         getTworkDisplay = await TworkDisplay.findAll();
+        getTmastSHift = await TmastShift.findAll()
         getttransOperation = await TtransOperation.findAll();
+        getttransStop = await TtransStop.findAll({
+          where : {
+            [Op.or] : [
+              literal(
+                `DATE(work_date) = DATE('${date}')`
+              ),
+              {
+                finish: {
+                  [Op.lte]: '06:00:00'
+                }
+              }
+            ] 
+          }
+        });
+
+        let groupedData = []
+
+         getTmastSHift.map(dataShift => {
+            const getcurrentTtransStop = 
+             getttransStop.filter(dataTtrasStop => 
+              dataTtrasStop.start >= dataShift.start &&
+              dataTtrasStop.finish <= dataShift.end
+              )
+              if(getcurrentTtransStop.length !== 0){
+
+                const calculationData = (data) => {
+                  return new Promise((resolve, reject) => {
+                      const [hours, minutes, seconds] = data.duration.split(':').map(parseFloat);
+                      const totalMinutes = hours * 60 + minutes + seconds / 60;
+                      const totalSecond = hours * 3600 + minutes * 60 + seconds
+        
+                      const key = `${dataShift.name}_${data.category_code}`; // Kunci unik untuk grup data
+
+                      if (!groupedData[key]) {
+                        groupedData[key] = {
+                          shift: dataShift.name,
+                          category_code: data.category_code,
+                          duration: totalSecond
+                        };
+                      } else {
+                        groupedData[key].duration += totalSecond; // Tambahkan durasi jika data sudah ada
+                      }
+                  })
+                }
+
+                getcurrentTtransStop.forEach(data => {
+                  const dataVlues = data.dataValues;
+                  if(dataVlues.category_code === 'PNM-01'){
+                      calculationData({duration :dataVlues.duration, category_code : 'PNM-01' })
+                  }
+                  if(dataVlues.category_code === 'DND'){
+                      calculationData({duration :dataVlues.duration, category_code : 'DND' })
+                  }
+                  if(dataVlues.category_code === 'PM-01'){
+                      calculationData({duration :dataVlues.duration, category_code : 'PM-01' })
+                  }
+        
+                });
+              } 
+          
+        })
+
+
         if (getMachine === null) {
           console.log("Data Machine null");
         } else {
@@ -83,8 +98,7 @@ export const addPlanningTworkDisplay = async () => {
             const foundInTworkDisplay =
              getTworkDisplay.find(
               (dataTwork) => 
-              dataTwork.machine_no === datamachine.code /* &&
-              dataTwork.part_code === datamachine.part_no  */
+              dataTwork.machine_no === datamachine.code 
             );
             if (!foundInTworkDisplay) {
               await TworkDisplay.create({
@@ -93,15 +107,26 @@ export const addPlanningTworkDisplay = async () => {
                 part_code: datamachine.part_no,
                 ctime: 0,
               });
+            }else{
+              await TworkDisplay.update({
+                part_code: datamachine.part_no,
+                dandorishift1 : groupedData['shift_1_DND'] && groupedData['shift_1_DND'].duration,
+                dandorishift2 : groupedData['shift_2_DND'] && groupedData['shift_2_DND'].duration,
+                dandorishift3 : groupedData['shift_3_DND'] && groupedData['shift_3_DND'].duration,
+              },
+                {
+                where : {
+                  machine_no: datamachine.code,
+                }
+              });
             }
           })
           getTworkDisplay.map(async (dataTwork) => {
             const existDataInMachine = 
             getMachine.find((dataMachine => 
-              dataMachine.code === dataTwork.machine_no &&
-              dataMachine.part_no === dataTwork.part_code
+              dataMachine.code === dataTwork.machine_no /* &&
+              dataMachine.part_no === dataTwork.part_code */
               ))
-  
             if(!existDataInMachine){
               await TworkDisplay.destroy({
                 where : {
@@ -111,8 +136,6 @@ export const addPlanningTworkDisplay = async () => {
             }
           })
           
-    
-  
           const dataWithMyCt = getTworkDisplay.map((itemDisplay) => {
             const matchMachine = getMachine.find(
               (itemMachine) => itemMachine.code === itemDisplay.machine_no
@@ -123,16 +146,14 @@ export const addPlanningTworkDisplay = async () => {
             };
           });
   
-          executeTaks(dataWithMyCt)
-       
           const promises = dataWithMyCt.map(executeTaks);
-  
           Promise.allSettled(promises).then(() => {
             promises.length = 0;
-          });      
+          });  
           
         }
       }, 1000);
+
 
       const executeTaks = async (item) => {      
         if (
@@ -145,7 +166,13 @@ export const addPlanningTworkDisplay = async () => {
         ) {
           addTaks.push(item);
           const { my_ct, machine_no } = item;
-         
+          new Promise(async() => {
+            for (const jobId in allJobs) {
+              schedule.cancelJob(allJobs[jobId]);
+          } 
+          }) 
+        
+
             schedule.scheduleJob(`*/${my_ct/1000} * * * * *`, async () => {
               const cekMachine = getttransOperation.find(
                 (itemMachine) => itemMachine.machine_no === machine_no
@@ -168,7 +195,6 @@ export const addPlanningTworkDisplay = async () => {
       
         }
       };
-    })
 
   
 
@@ -176,3 +202,36 @@ export const addPlanningTworkDisplay = async () => {
     console.log(error);
   }
 };
+
+export const addDandoriToTworkDisplay = async (req,res) => {
+
+  let addTaks = [];
+  let getMachine = [];
+  let getTworkDisplay = [];
+  let getttransOperation = [];
+
+  setInterval(async () => {
+    getMachine = await TmastMachine.findAll()
+    getTworkDisplay = await TworkDisplay.findAll()
+    getttransOperation = await TtransOperation.findAll()
+    if(!getMachine){
+      return res.sendStatus(404)
+    }else{
+      getMachine.map(async (dataMachine) => {
+        const foundInTworkDisplay = getTworkDisplay.find((dataTworkDisplay) => 
+        dataTworkDisplay.machine_no === dataMachine.code)
+        if(!foundInTworkDisplay){
+
+        }
+      })
+
+    }
+
+  }, 1000);
+
+
+
+  const executeTaks = async () => {
+    
+  }
+}

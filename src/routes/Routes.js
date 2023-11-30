@@ -12,12 +12,24 @@ import { createTworkDisplay, deleteTworkDisplay, getTworkDisplay, updateTworkDis
 import { createTmastSloc, deleteTmastSloc, getTmastSloc, updateTmastSloc } from "../controllers/master/MasterSlocController.js"
 import { createTmastKanban, deleteTmastKanban, getTmastKanban, updateTmastKanban } from "../controllers/master/MasterKanbanCOntroller.js"
 import { createTmastWarehouse, deleteTmastWarehouse, getTmastWarehouse, updateTmastWarehouse } from "../controllers/master/TmastWarehouseController.js"
-
 import { createTworkOee, deleteTworkOee, getTworkOee, updateTworkOee } from "../controllers/public/TworkOeeController.js"
 import { getTmastShift } from "../controllers/master/MasterShiftController.js"
+import multer from 'multer'
+import { createTtransDn, getTtransDn } from "../controllers/transaction/TransactionDn.js"
 
-//import {} from "../controllers/master/"
 const Routes = new express.Router()
+
+const storage = multer.diskStorage({
+    destination : 'uploads/',
+    filename : (req,file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname)
+    }
+})
+
+const upload = multer({storage})
+
+Routes.post('/dn', upload.single('file'), createTtransDn);
+Routes.get('/dn', getTtransDn)
 
 /* --------------- Start Master --------------- */
 
@@ -119,6 +131,10 @@ Routes.delete('/ttrans_stop', deleteTtransStop)
 /* --------------- End Transaction --------------- */
 
 /* --------------- Start Public --------------- */
+
+/* Start Public Shift */
+/* End Public Shift */
+
 
 /* Start Public Twork Display */
 Routes.get('/twork_display', getTworkDisplay)

@@ -16,10 +16,12 @@ import * as TmastShift from "../model/modelMigration/master/TmastShift.js"
 import * as TmastCategory from "../model/modelMigration/master/TmastCategory.js"
 import * as TmastsubCategory from "../model/modelMigration/master/TmastSubCategory.js"
 import * as TmastMAchineGroup from "../model/modelMigration/master/TmastMachineGroup.js"
+import * as TtarnsDn from '../model/modelMigration/transaction/TtarnsDn.js'
 const runMigrations = async () => {
     try {
         await Database.authenticate()
         console.log('Conection Success')
+        await TtarnsDn.up(Database.getQueryInterface())
     /*     await TworkDisplay.up(Database.getQueryInterface())
         await TmastMAchineGroup.up(Database.getQueryInterface()) */
 
@@ -29,7 +31,7 @@ const runMigrations = async () => {
 
         await TtransOutput.up(Database.getQueryInterface())
         await TmastKanban.up(Database.getQueryInterface())
-        await TmastMachine.up(Database.getQueryInterface())
+        await TmastMachine.up(Database.getQueryInterface())e:\program\old_tekno_demo\src\controllers\transaction\TtransactionDnController.js
         await TmastSloc.up(Database.getQueryInterface())
         await TmastWarehouse.up(Database.getQueryInterface())
         await TtransDefect.up(Database.getQueryInterface())

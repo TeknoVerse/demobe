@@ -57,7 +57,6 @@ try {
         }
       })
       const currentDatavalues = currentData.dataValues
-      
   
       if( (getMachine.category === null && currentDatavalues.finish === null) || options === "process") {
           /* Start Time */
@@ -150,10 +149,11 @@ try {
             work_date : newDate,
     
           }) 
-          res.sendStatus(200)
+
      
 
       }
+
     }else{
       if( getMachine.category !== null ){
         await TtransStop.create({
@@ -179,11 +179,11 @@ try {
           sub_category_code : sub_category_code,
           work_date : newDate,
         })
-        res.sendStatus(200)
       
       }
     }
   }
+  return res.sendStatus(200)
 } catch (error) {
   console.log(error)
 }

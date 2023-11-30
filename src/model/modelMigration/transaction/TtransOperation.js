@@ -1,6 +1,5 @@
 
 
-import { DataTypes } from "sequelize"
 import { ttransOperationDefinition } from "../../definitions/transaction/TtransOperation.js"
 
 export const up = async (queryInterface) => {

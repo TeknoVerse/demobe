@@ -59,7 +59,8 @@ export const createTworkOee = async (req, res) => {
       const minutesLoadingTime = parseInt(splitloadingTime[1]);
       const secondsLoadingTime = parseInt(splitloadingTime[2]);
       loadingTime =
-        hoursLoadingTime * 60 + minutesLoadingTime + secondsLoadingTime / 60;
+      hoursLoadingTime * 60 + minutesLoadingTime + secondsLoadingTime / 60;
+
 
       // get Down Time
       const startShift = getTmastSHift.start;
@@ -135,14 +136,8 @@ export const createTworkOee = async (req, res) => {
 
         }
       })
-
       qtyTtransDefect = getTtransDefect.reduce((acc, value) => acc + value.qty,0)
-   
-
-
-
       let currentDownTime = 0;
-
       getTtransStop.forEach((data) => {
         const dataVlues = data.dataValues;
 
