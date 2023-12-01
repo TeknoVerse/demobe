@@ -21,8 +21,8 @@ const runRollback = async () => {
     try {
         await Database.authenticate()
         console.log('Conection Success')
-   /*      await TworkDisplay.down(Database.getQueryInterface())
-        await TmastMAchineGroup.down(Database.getQueryInterface()) */
+        await TworkDisplay.down(Database.getQueryInterface())
+      //  await TmastMAchineGroup.down(Database.getQueryInterface()) */
 
 
     /*     await TmastProduct.down(Database.getQueryInterface())

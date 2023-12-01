@@ -85,6 +85,30 @@ export const tworkDisplayDefinition =  {
         type : DataTypes.INTEGER,
         allowNull : true
     },
+    problem_non_machine_1 : {
+        type : DataTypes.INTEGER,
+        allowNull : true
+    },
+    problem_non_machine_2 : {
+        type : DataTypes.INTEGER,
+        allowNull : true
+    },
+    problem_non_machine_3 : {
+        type : DataTypes.INTEGER,
+        allowNull : true
+    },
+    problem_machine_1 : {
+        type : DataTypes.INTEGER,
+        allowNull : true
+    },
+    problem_machine_2 : {
+        type : DataTypes.INTEGER,
+        allowNull : true
+    },
+    problem_machine_3 : {
+        type : DataTypes.INTEGER,
+        allowNull : true
+    },
     plantotalday :{
         type : DataTypes.INTEGER,
         allowNull :true,

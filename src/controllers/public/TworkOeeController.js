@@ -27,9 +27,7 @@ export const createTworkOee = async (req, res) => {
 
     if ((machine_no, shift_id, date)) {
       const formatedDate = new Date(date).toISOString().split('T')?.[0]
-      
-  
-   
+
       const existDataInDataBase = await TworkOee.findOne({
         where: {
           [Op.and]: literal(
@@ -58,10 +56,7 @@ export const createTworkOee = async (req, res) => {
       const hoursLoadingTime = parseInt(splitloadingTime[0]);
       const minutesLoadingTime = parseInt(splitloadingTime[1]);
       const secondsLoadingTime = parseInt(splitloadingTime[2]);
-      loadingTime =
-      hoursLoadingTime * 60 + minutesLoadingTime + secondsLoadingTime / 60;
-
-
+      loadingTime = hoursLoadingTime * 60 + minutesLoadingTime + secondsLoadingTime / 60;
       // get Down Time
       const startShift = getTmastSHift.start;
       const endShift = getTmastSHift.end;
@@ -136,6 +131,7 @@ export const createTworkOee = async (req, res) => {
 
         }
       })
+
       qtyTtransDefect = getTtransDefect.reduce((acc, value) => acc + value.qty,0)
       let currentDownTime = 0;
       getTtransStop.forEach((data) => {
@@ -178,11 +174,11 @@ export const createTworkOee = async (req, res) => {
       const avaibility = (((loadingTime - downTime) / loadingTime) * 100).toFixed(2);
       const performance = ((totalDataCTxOutput / operationTime) * 100).toFixed(2);
       const quality = (((qtyTtransOutput - qtyTtransDefect) / qtyTtransOutput) * 100).toFixed(2);
-      console.log(avaibility)
+   /*    console.log(avaibility)
       console.log(performance)
-      console.log(quality)
+      console.log(quality) */
       const oee = parseFloat(avaibility) + parseFloat(performance) + parseFloat(quality)
-      console.log(oee.toFixed(2))
+    /*   console.log(oee.toFixed(2)) */
       
    
 
@@ -196,7 +192,7 @@ export const createTworkOee = async (req, res) => {
         performance: performance,
         quality: quality,
       });
-    res.json({oee: oee,avaibility : avaibility ,performance : performance,quality: quality});
+      res.json({oee: oee,avaibility : avaibility ,performance : performance,quality: quality});
     }else{
       await TworkOee.update({
         oee: oee,
@@ -208,13 +204,15 @@ export const createTworkOee = async (req, res) => {
           id :existDataInDataBase.id
         }
       });
-    res.json({oee: oee,avaibility : avaibility ,performance : performance,quality: quality});
+      res.json({oee: oee,avaibility : avaibility ,performance : performance,quality: quality});
     }
     }
+    res.sendStatus(200)
   } catch (error) {
     console.log(error);
   }
 };
+
 export const updateTworkOee = async (req, res) => {
   try {
     const { id, machine_code } = req.query;

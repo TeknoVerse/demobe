@@ -21,10 +21,10 @@ const runMigrations = async () => {
     try {
         await Database.authenticate()
         console.log('Conection Success')
-        await TtarnsDn.up(Database.getQueryInterface())
-    /*     await TworkDisplay.up(Database.getQueryInterface())
+        await TworkDisplay.up(Database.getQueryInterface())
+    //    await TtarnsDn.up(Database.getQueryInterface())
+    /*    
         await TmastMAchineGroup.up(Database.getQueryInterface()) */
-
 /*
         await TmastProduct.up(Database.getQueryInterface())
         await TmastDefect.up(Database.getQueryInterface())

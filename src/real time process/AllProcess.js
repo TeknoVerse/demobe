@@ -70,6 +70,7 @@ export const addPlanningTworkDisplay = async () => {
                       } else {
                         groupedData[key].duration += totalSecond; // Tambahkan durasi jika data sudah ada
                       }
+                      return resolve
                   })
                 }
 
@@ -89,10 +90,11 @@ export const addPlanningTworkDisplay = async () => {
               } 
           
         })
+//        console.log(groupedData)
 
 
         if (getMachine === null) {
-          console.log("Data Machine null");
+          return console.log("Data Machine null");
         } else {
           getMachine.map(async (datamachine) => {
             const foundInTworkDisplay =
@@ -113,6 +115,13 @@ export const addPlanningTworkDisplay = async () => {
                 dandorishift1 : groupedData['shift_1_DND'] && groupedData['shift_1_DND'].duration,
                 dandorishift2 : groupedData['shift_2_DND'] && groupedData['shift_2_DND'].duration,
                 dandorishift3 : groupedData['shift_3_DND'] && groupedData['shift_3_DND'].duration,
+                problem_machine_1: groupedData['shift_1_PM-01'] && groupedData['shift_1_PM-01'].duration,
+                problem_machine_2: groupedData['shift_2_PM-01'] && groupedData['shift_2_PM-01'].duration,
+                problem_machine_3: groupedData['shift_3_PM-01'] && groupedData['shift_3_PM-01'].duration,
+                problem_non_machine_1: groupedData['shift_1_PNM-01'] && groupedData['shift_1_PNM-01'].duration,
+                problem_non_machine_2: groupedData['shift_2_PNM-01'] && groupedData['shift_2_PNM-01'].duration,
+                problem_non_machine_3: groupedData['shift_3_PNM-01'] && groupedData['shift_3_PNM-01'].duration,
+          
               },
                 {
                 where : {
@@ -196,8 +205,7 @@ export const addPlanningTworkDisplay = async () => {
         }
       };
 
-  
-
+      return res.sendStatus(200)
   } catch (error) {
     console.log(error);
   }
