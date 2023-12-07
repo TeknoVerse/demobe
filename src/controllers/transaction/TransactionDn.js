@@ -29,12 +29,12 @@ export const createTtransDn = async (req,res) => {
         const filePath = req.file.path
         const rawData = fs.readFileSync(filePath, 'utf-8')
         const lines = rawData.trim().split('\n')
-/* 
+
         const header = lines[0].split('|')
         let headerData = {}
         header.forEach((data,index) => {
             headerData[`data_${index+1}`] = data.trim()
-        }); */
+        });
 
         for (let i = 1; i < lines.length; i++) {
             const rowDataBody = lines[i].split('\t')

@@ -6,7 +6,7 @@ import schedule from "node-schedule";
 import TtransStop from "../model/modelData/transaction/TtransStop.js";
 import TmastShift from "../model/modelData/master/TmastShift.js";
 
-export const addPlanningTworkDisplay = async () => {
+export const addPlanningTworkDisplay = async (req,res) => {
   try {
 
     let addTaks = [];
@@ -205,7 +205,7 @@ export const addPlanningTworkDisplay = async () => {
         }
       };
 
-      return res.sendStatus(200)
+      return
   } catch (error) {
     console.log(error);
   }
@@ -213,7 +213,6 @@ export const addPlanningTworkDisplay = async () => {
 
 export const addDandoriToTworkDisplay = async (req,res) => {
 
-  let addTaks = [];
   let getMachine = [];
   let getTworkDisplay = [];
   let getttransOperation = [];
