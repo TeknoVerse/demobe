@@ -90,7 +90,6 @@ export const addPlanningTworkDisplay = async (req,res) => {
               } 
           
         })
-//        console.log(groupedData)
 
 
         if (getMachine === null) {
@@ -112,17 +111,18 @@ export const addPlanningTworkDisplay = async (req,res) => {
             }else{
               await TworkDisplay.update({
                 part_code: datamachine.part_no,
-                dandorishift1 : groupedData['shift_1_DND'] && groupedData['shift_1_DND'].duration,
-                dandorishift2 : groupedData['shift_2_DND'] && groupedData['shift_2_DND'].duration,
-                dandorishift3 : groupedData['shift_3_DND'] && groupedData['shift_3_DND'].duration,
-                problem_machine_1: groupedData['shift_1_PM-01'] && groupedData['shift_1_PM-01'].duration,
-                problem_machine_2: groupedData['shift_2_PM-01'] && groupedData['shift_2_PM-01'].duration,
-                problem_machine_3: groupedData['shift_3_PM-01'] && groupedData['shift_3_PM-01'].duration,
-                problem_non_machine_1: groupedData['shift_1_PNM-01'] && groupedData['shift_1_PNM-01'].duration,
-                problem_non_machine_2: groupedData['shift_2_PNM-01'] && groupedData['shift_2_PNM-01'].duration,
-                problem_non_machine_3: groupedData['shift_3_PNM-01'] && groupedData['shift_3_PNM-01'].duration,
+                dandorishift1 : (groupedData['shift_1_DND'] && groupedData['shift_1_DND'].duration) || (groupedData['shift_1\n_DND'] && groupedData['shift_1\n_DND'].duration),
+                dandorishift2 : (groupedData['shift_2_DND'] && groupedData['shift_2_DND'].duration) || (groupedData['shift_2\n_DND'] && groupedData['shift_2\n_DND'].duration),
+                dandorishift3 : (groupedData['shift_3_DND'] && groupedData['shift_3_DND'].duration) || (groupedData['shift_3\n_DND'] && groupedData['shift_3\n_DND'].duration),
+                problem_machine_1: (groupedData['shift_1_PM-01'] && groupedData['shift_1_PM-01'].duration) || (groupedData['shift_1\n_PM-01'] && groupedData['shift_1\n_PM-01'].duration),
+                problem_machine_2: (groupedData['shift_2_PM-01'] && groupedData['shift_2_PM-01'].duration) || (groupedData['shift_2\n_PM-01'] && groupedData['shift_2\n_PM-01'].duration),
+                problem_machine_3: (groupedData['shift_3_PM-01'] && groupedData['shift_3_PM-01'].duration) || (groupedData['shift_3\n_PM-01'] && groupedData['shift_3\n_PM-01'].duration),
+                problem_non_machine_1: (groupedData['shift_1_PNM-01'] && groupedData['shift_1_PNM-01'].duration) || (groupedData['shift_1\n_PNM-01'] && groupedData['shift_1\n_PNM-01'].duration),
+                problem_non_machine_2: (groupedData['shift_2_PNM-01'] && groupedData['shift_2_PNM-01'].duration) || groupedData['shift_2\n_PNM-01'] && groupedData['shift_2\n_PNM-01'].duration,
+                problem_non_machine_3: (groupedData['shift_3_PNM-01'] && groupedData['shift_3_PNM-01'].duration) || (groupedData['shift_3\n_PNM-01'] && groupedData['shift_3\n_PNM-01'].duration),
           
               },
+   
                 {
                 where : {
                   machine_no: datamachine.code,
