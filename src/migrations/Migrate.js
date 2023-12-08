@@ -22,26 +22,25 @@ const runMigrations = async () => {
         await Database.authenticate()
         console.log('Conection Success')
         await TworkDisplay.up(Database.getQueryInterface())
-    //    await TtarnsDn.up(Database.getQueryInterface())
-    /*    
-        await TmastMAchineGroup.up(Database.getQueryInterface()) */
-/*
+        await TtarnsDn.up(Database.getQueryInterface())
+      
+        await TmastMAchineGroup.up(Database.getQueryInterface())
         await TmastProduct.up(Database.getQueryInterface())
         await TmastDefect.up(Database.getQueryInterface())
 
         await TtransOutput.up(Database.getQueryInterface())
         await TmastKanban.up(Database.getQueryInterface())
-        await TmastMachine.up(Database.getQueryInterface())e:\program\old_tekno_demo\src\controllers\transaction\TtransactionDnController.js
+        await TmastMachine.up(Database.getQueryInterface())
         await TmastSloc.up(Database.getQueryInterface())
         await TmastWarehouse.up(Database.getQueryInterface())
         await TtransDefect.up(Database.getQueryInterface())
         await TtransOperation.up(Database.getQueryInterface())
         
-        await TtransStop.up(Database.getQueryInterface()) */
-       // await TworkOee.up(Database.getQueryInterface())
-       // await TmastShift.up(Database.getQueryInterface())
-       // await TmastCategory.up(Database.getQueryInterface())
-       // await TmastsubCategory.up(Database.getQueryInterface())
+        await TtransStop.up(Database.getQueryInterface())
+        await TworkOee.up(Database.getQueryInterface())
+        await TmastShift.up(Database.getQueryInterface())
+        await TmastCategory.up(Database.getQueryInterface())
+        await TmastsubCategory.up(Database.getQueryInterface())
         console.log('Migration Success fully')
 
     } catch (error) {
