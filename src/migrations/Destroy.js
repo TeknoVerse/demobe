@@ -14,6 +14,7 @@ import * as TtransStop from "../model/modelMigration/transaction/TtransStop.js"
 import * as TworkOee from "../model/modelMigration/public/TworkOee.js"
 import * as TmastShift from "../model/modelMigration/master/TmastShift.js"
 import * as TmastMAchineGroup from "../model/modelMigration/master/TmastMachineGroup.js"
+import * as TtransSerialCodeQrKanban from "../model/modelMigration/transaction/TtransSerialCodeQrCode.js";
 
 
 
@@ -22,6 +23,7 @@ const runRollback = async () => {
         await Database.authenticate()
         console.log('Conection Success')
         await TworkDisplay.down(Database.getQueryInterface())
+        await TtransSerialCodeQrKanban.down(Database.getQueryInterface())
       //  await TmastMAchineGroup.down(Database.getQueryInterface()) */
 
 
@@ -39,7 +41,6 @@ const runRollback = async () => {
      //   await TworkOee.down(Database.getQueryInterface())
         //await TmastShift.down(Database.getQueryInterface())
         console.log('Migration Destroy Success fully')
-q
     } catch (error) {
         console.error('Conection Failed')
     } finally {

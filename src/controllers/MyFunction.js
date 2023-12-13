@@ -1,5 +1,42 @@
 import { Op } from "sequelize";
 import TmastShift from "../model/modelData/master/TmastShift.js";
+import jwt from "jsonwebtoken";
+import TtransSerialCodeQrKanban  from "../model/modelData/transaction/TtransSerialCodeQrKanban.js"
+
+import { secret_key_serial_code_qr_kanban } from "../../config/commands/ConfigurationDb.js";
+export const createToken = (req,res) => {
+    try {
+        const data = req.body
+         const token = jwt.sign(data,secret_key_serial_code_qr_kanban)
+         return res.json(token)
+    } catch (error) {
+      return   console.log(error)
+    }
+}
+
+
+
+export const verifyTokenSerialCodeQrKanban = async (req,res) => {
+    try {
+        const {kanban_id, serial_code} = req.body
+        if(kanban_id, serial_code){
+            const cekDataSerialCodeQrKanban = await TtransSerialCodeQrKanban.findOne({
+                where :{
+                    kanban_id : kanban_id,
+                    serial_code : serial_code
+                }
+            })
+
+            if(cekDataSerialCodeQrKanban){
+            console.log(cekDataSerialCodeQrKanban)
+
+            }
+        }
+        res.sendStatus(200)
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export const handleLocalTime = (time) => {
     const timeTolocalString = new Date(time).toLocaleTimeString()

@@ -18,6 +18,7 @@ export const getTtransOutput = async (req,res) => {
             res.json(response)
         }
         
+        res.sendStatus(200)
 
       
     } catch (error) {

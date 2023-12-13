@@ -17,13 +17,15 @@ import * as TmastCategory from "../model/modelMigration/master/TmastCategory.js"
 import * as TmastsubCategory from "../model/modelMigration/master/TmastSubCategory.js"
 import * as TmastMAchineGroup from "../model/modelMigration/master/TmastMachineGroup.js"
 import * as TtarnsDn from '../model/modelMigration/transaction/TtarnsDn.js'
+import * as TtransSerialCodeQrKanban from "../model/modelMigration/transaction/TtransSerialCodeQrCode.js";
 const runMigrations = async () => {
     try {
         await Database.authenticate()
         console.log('Conection Success')
-        await TworkDisplay.up(Database.getQueryInterface())
+        await TtransSerialCodeQrKanban.up(Database.getQueryInterface())
+
+      /*   await TworkDisplay.up(Database.getQueryInterface())
         await TtarnsDn.up(Database.getQueryInterface())
-      
         await TmastMAchineGroup.up(Database.getQueryInterface())
         await TmastProduct.up(Database.getQueryInterface())
         await TmastDefect.up(Database.getQueryInterface())
@@ -40,9 +42,8 @@ const runMigrations = async () => {
         await TworkOee.up(Database.getQueryInterface())
         await TmastShift.up(Database.getQueryInterface())
         await TmastCategory.up(Database.getQueryInterface())
-        await TmastsubCategory.up(Database.getQueryInterface())
-        console.log('Migration Success fully')
-
+        await TmastsubCategory.up(Database.getQueryInterface()) */
+         console.log('Migration Success fully')
     } catch (error) {
         console.error('Conection Failed')
     } finally {

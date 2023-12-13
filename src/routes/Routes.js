@@ -16,6 +16,8 @@ import { createTworkOee, deleteTworkOee, getTworkOee, updateTworkOee } from "../
 import { getTmastShift } from "../controllers/master/MasterShiftController.js"
 import multer from 'multer'
 import { createTtransDn, getTtransDn } from "../controllers/transaction/TransactionDn.js"
+import {  createTtransSerialCodeQrKanban, deleteTtransSerialCodeQrKanban, getTtransSerialCodeQrKanban } from "../controllers/transaction/TtransactionSerialCodeQrKanban.js"
+import { createToken, verifyTokenSerialCodeQrKanban } from "../controllers/MyFunction.js"
 
 const Routes = new express.Router()
 
@@ -97,7 +99,16 @@ Routes.delete('/sub-category', deleteTmastSubCategory)
 /* --------------- End Master --------------- */
 
 
-/* --------------- Start Transaction --------------- *
+/* --------------- Start Transaction --------------- */
+
+Routes.post('/create_token', createToken)
+Routes.post('/verify_token_qr_kanban', verifyTokenSerialCodeQrKanban)
+
+/* Start Ttransaction Serial Code Qr Code  */
+Routes.get('/ttrans_serial_code_qr_kanban' , getTtransSerialCodeQrKanban)
+Routes.post('/ttrans_serial_code_qr_kanban' , createTtransSerialCodeQrKanban)
+Routes.delete('/ttrans_serial_code_qr_kanban' , deleteTtransSerialCodeQrKanban)
+/* End Ttransaction Serial Code Qr Code  */
 
 /* Start Transaction Defect */
 Routes.get('/ttrans_defect', getTtransDefect)
